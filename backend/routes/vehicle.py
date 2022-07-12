@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -14,7 +16,7 @@ def read_all(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
 
 @router.get("/{vehicle_id}", response_model=VehicleResponse)
-def read(vehicle_id: int, db: Session = Depends(get_db)):
+def read(vehicle_id: str, db: Session = Depends(get_db)):
     vehicle = vehicle_service.read(db, vehicle_id)
 
     if not vehicle:
@@ -35,7 +37,7 @@ def create(vehicle_create: VehicleCreate, db: Session = Depends(get_db)):
 @router.put("/", response_model=VehicleResponse)
 def update(vehicle_update: VehicleUpdate, db: Session = Depends(get_db)):
     vehicle = vehicle_service.read(db, vehicle_update.id)
-
+    
     if not vehicle:
         raise HTTPException(status_code=404)
 
@@ -43,7 +45,7 @@ def update(vehicle_update: VehicleUpdate, db: Session = Depends(get_db)):
 
 
 @router.delete("/{vehicle_id}", response_model=VehicleResponse)
-def delete(vehicle_id: int, db: Session = Depends(get_db)):
+def delete(vehicle_id: str, db: Session = Depends(get_db)):
     vehicle = vehicle_service.read(db, vehicle_id)
 
     if not vehicle:

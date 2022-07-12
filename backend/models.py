@@ -27,9 +27,7 @@ class Trip(Base):
     vehicle_id = Column(ForeignKey("vehicle.id"))
     location_from = Column(String)
     location_to = Column(String)
-    distance = Column(Integer, nullable=True)
-    completed = Column(Boolean)
-    comment = Column(String, nullable=True)
+    distance = Column(Integer)
 
     driver = relationship("Employee", back_populates="trips")
     vehicle = relationship("Vehicle", back_populates="trips")

@@ -1,35 +1,72 @@
 package badvilbel.ws20st.frontend
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import org.json.JSONObject
+import badvilbel.ws20st.frontend.driver.NewTripActivity
+import badvilbel.ws20st.frontend.models.employee.EmployeeLogin
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var etEmployeeId: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var tvLoginError: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        etEmployeeId = findViewById(R.id.etEmployeeId)
+        etPassword = findViewById(R.id.etPassword)
+        tvLoginError = findViewById(R.id.tvLoginError)
     }
 
     fun login(view: View) {
-        val loginJSONBody = JSONObject();
+        tvLoginError.text = ""
 
-        loginJSONBody.put("id", findViewById<EditText>(R.id.etId).text.toString())
-        loginJSONBody.put("password", findViewById<EditText>(R.id.etPassword).text.toString())
+        val id = etEmployeeId.text.toString()
+        val password = etPassword.text.toString()
 
-        RQSingleton.getInstance(this).addToRequestQueue(
-            JsonObjectRequest(Request.Method.POST, getString(R.string.backend_url).toString() + "/auth/employee_login", loginJSONBody,
-                Response.Listener { response ->
-                    println("JWT: ${response["access_token"]}")
-                },
-                Response.ErrorListener {
-                    findViewById<TextView>(R.id.tvError).text = "Login fehlgeschlagen"
-                })
-        )
+        if (id != "" && password != "") {
+            GlobalScope.launch(Dispatchers.Main) {
+                val response = RetrofitInstance.api.login(EmployeeLogin(id.toInt(), password))
+
+                if (response.isSuccessful && response.body() != null) {
+
+                    val sharedPref = getSharedPreferences("employee", Context.MODE_PRIVATE)
+
+                    val body = response.body()
+
+                    with(sharedPref.edit()) {
+                        putInt("id", body!!.id)
+                        putString("first_name", body!!.firstName)
+                        putString("last_name", body!!.lastName)
+                        putString("role", body!!.role)
+                        putString("access_token", body!!.accessToken)
+                        commit()
+                    }
+
+                    when (body!!.role) {
+                        "driver" -> {
+                            startActivity(
+                                Intent(
+                                    this@LoginActivity,
+                                    NewTripActivity::class.java
+                                )
+                            )
+                            finish()
+                        }
+                    }
+                } else {
+                    tvLoginError.text = getString(R.string.error1)
+                }
+            }
+        }
     }
 }

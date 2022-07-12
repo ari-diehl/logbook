@@ -6,12 +6,17 @@ Content-Type: application/json
     "password": "123"
 }
 ###
-POST http://localhost:5000/vehicles HTTP/1.1
+GET http://localhost:5000/trips HTTP/1.1
+###
+GET http://localhost:5000/vehicles/LDKAD226 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJleHAiOjE2NTc2NjU0ODJ9.LAv8B7ksUKwtEcsY3fDMVSZmPU-4ovlm0LycGiM31s4
+###
+PUT http://localhost:5000/vehicles HTTP/1.1
 Content-Type: application/json
 
 {
     "id": "LDKAD226",
     "manufacturer": "VW",
     "model": "Fox",
-    "mileage": 65000
+    "mileage": 65100
 }

@@ -7,12 +7,10 @@ class TripBase(BaseModel):
     start: datetime
     end: datetime
     driver_id: int
-    vehicle_id: int
+    vehicle_id: str
     location_from: str
     location_to: str
-    distance: Optional[int] = None
-    completed: bool
-    comment: Optional[str] = None
+    distance: int
 
 
 class TripCreate(TripBase):
@@ -24,10 +22,9 @@ class TripUpdate(TripBase):
     start: Optional[datetime] = None
     end: Optional[datetime] = None
     driver_id: Optional[int] = None
-    vehicle_id: Optional[int] = None
+    vehicle_id: Optional[str] = None
     location_from: Optional[str] = None
     location_to: Optional[str] = None
-    completed: Optional[bool] = None
 
 
 class TripResponse(TripBase):

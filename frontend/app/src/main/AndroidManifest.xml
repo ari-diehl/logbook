@@ -4,6 +4,8 @@
     package="badvilbel.ws20st.frontend">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,15 +19,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".TripSCActivity"
+            android:name=".driver.TripFinishedActivity"
             android:exported="false" />
         <activity
-            android:name=".TripCSActivity"
-            android:exported="false"
-            android:label="@string/title_activity_trip_csactivity"
-            android:theme="@style/Theme.Frontend.NoActionBar" />
+            android:name=".driver.TripRecordingActivity"
+            android:exported="false" />
         <activity
-            android:name=".DriverFormActivity"
+            android:name=".driver.NewTripActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
