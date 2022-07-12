@@ -11,6 +11,16 @@ GET http://localhost:5000/trips HTTP/1.1
 GET http://localhost:5000/vehicles/LDKAD226 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJleHAiOjE2NTc2NjU0ODJ9.LAv8B7ksUKwtEcsY3fDMVSZmPU-4ovlm0LycGiM31s4
 ###
+POST http://localhost:5000/vehicles HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": "LDKAD226",
+    "manufacturer": "VW",
+    "model": "Fox",
+    "mileage": 65100
+}
+###
 PUT http://localhost:5000/vehicles HTTP/1.1
 Content-Type: application/json
 
@@ -19,4 +29,28 @@ Content-Type: application/json
     "manufacturer": "VW",
     "model": "Fox",
     "mileage": 65100
+}
+###
+POST http://localhost:5000/trips HTTP/1.1
+Content-Type: application/json
+
+{
+  "start": "2022-07-193T18:57:12.012Z",
+  "end": "2022-07-12T16:36:20.771Z",
+  "driver_id": 2,
+  "vehicle_id": "LDKAD226",
+  "location_from": "string",
+  "location_to": "string",
+  "distance": 0
+}
+###
+POST http://localhost:5000/employees HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 2,
+  "first_name": "Daniel",
+  "last_name": "Spahn",
+  "role": "driver",
+  "password": "123"
 }

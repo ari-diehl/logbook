@@ -25,7 +25,7 @@ interface LogbookApi {
     suspend fun getVehicle(@Path("vehicle_id") id: String): Response<VehicleResponse>
 
     @Headers("Content-Type: application/json")
-    @PUT("/vehicles/1")
+    @PUT("/vehicles/")
     suspend fun updateVehicle(@Body vehicle: VehicleUpdate): Response<VehicleResponse>
 
     @Headers("Content-Type: application/json")

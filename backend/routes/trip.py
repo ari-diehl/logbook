@@ -25,10 +25,6 @@ def read(trip_id: int, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=TripResponse)
 def create(trip_create: TripCreate, db: Session = Depends(get_db)):
-    if trip_service.read(db, trip_create.id):
-        raise HTTPException(
-            status_code=400)
-
     return trip_service.create(db, trip_create)
 
 

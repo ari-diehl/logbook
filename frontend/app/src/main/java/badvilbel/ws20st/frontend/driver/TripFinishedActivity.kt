@@ -66,7 +66,7 @@ class TripFinishedActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.Main) {
             val response = RetrofitInstance.api.createTrip(trip)
-            println(trip)
+
             val responseVehicle = RetrofitInstance.api.updateVehicle(
                 VehicleUpdate(
                     id = trip.vehicleId,

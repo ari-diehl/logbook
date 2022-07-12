@@ -30,11 +30,11 @@ def read_employee(employee_id: int, current_employee=Depends(get_current_employe
 
     return employee
 
-
+#current_employee=Depends(get_current_employee),
 @router.post("/", response_model=EmployeeResponse)
-def create_employee(employee_create: EmployeeCreate, current_employee=Depends(get_current_employee), db: Session = Depends(get_db)):
-    if current_employee.role != "invoice":
-        raise HTTPException(status_code=401)
+def create_employee(employee_create: EmployeeCreate, db: Session = Depends(get_db)):
+    #if current_employee.role != "invoice":
+        #raise HTTPException(status_code=401)
 
     employee = employee_service.read(db, employee_create.id)
 

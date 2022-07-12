@@ -148,7 +148,7 @@ class TripRecordingActivity : AppCompatActivity() {
         )[0].getAddressLine(0)
 
         val format = SimpleDateFormat("dd.MM.yyyy HH:mm")
-        val jsonFormat = SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss.sss'Z'")
+        val jsonFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
 
         val now = Date()
 
