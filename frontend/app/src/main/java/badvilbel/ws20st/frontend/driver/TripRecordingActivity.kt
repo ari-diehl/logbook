@@ -32,7 +32,7 @@ class TripRecordingActivity : AppCompatActivity() {
     private var previousLocation: Location? = null
     private var currentLocation: Location? = null
 
-    private var distanceCovered: Int = 0
+    private var distanceCovered: Double = 0.0
 
     private lateinit var tvDistanceCovered: TextView
     private lateinit var tvDuration: TextView
@@ -66,9 +66,9 @@ class TripRecordingActivity : AppCompatActivity() {
         }
 
         locationRequest = LocationRequest.create().apply {
-            interval = TimeUnit.SECONDS.toMillis(60)
-            fastestInterval = TimeUnit.SECONDS.toMillis(30)
-            maxWaitTime = TimeUnit.MINUTES.toMillis(2)
+            interval = TimeUnit.SECONDS.toMillis(1)
+            fastestInterval = TimeUnit.SECONDS.toMillis(1)
+            maxWaitTime = TimeUnit.SECONDS.toMillis(1)
             priority = Priority.PRIORITY_HIGH_ACCURACY
         }
 
@@ -78,15 +78,15 @@ class TripRecordingActivity : AppCompatActivity() {
 
                 currentLocation = locationResult.lastLocation
 
-                distanceCovered += (currentLocation!!.distanceTo(previousLocation) / 1000).toInt()
-                tvDistanceCovered.text = distanceCovered.toString()
+                distanceCovered += currentLocation!!.distanceTo(previousLocation)
+                tvDistanceCovered.text = (distanceCovered / 1000).toInt().toString()
 
                 previousLocation = currentLocation
             }
 
         }
 
-        fusedLocationClient.lastLocation
+        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
             .addOnSuccessListener { location: Location? ->
                 startLocation = location
                 previousLocation = location
@@ -155,7 +155,7 @@ class TripRecordingActivity : AppCompatActivity() {
         with(intent) {
             putExtra("vehicleId", vehicleId)
             putExtra("mileage", mileage)
-            putExtra("distance", distanceCovered)
+            putExtra("distance", (distanceCovered / 1000).toInt())
             putExtra("start", format.format(start))
             putExtra("end", format.format(now))
             putExtra("startJson", jsonFormat.format(start))

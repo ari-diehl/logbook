@@ -31,6 +31,4 @@ interface LogbookApi {
     @Headers("Content-Type: application/json")
     @POST("/trips/")
     suspend fun createTrip(@Body trip: TripCreate): Response<TripResponse>
-
-
 }
