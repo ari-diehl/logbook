@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import badvilbel.ws20st.frontend.R
 import badvilbel.ws20st.frontend.RetrofitInstance
@@ -75,12 +76,21 @@ class TripFinishedActivity : AppCompatActivity() {
             )
 
             if (response.isSuccessful && response.body() != null && responseVehicle.isSuccessful && responseVehicle.body() != null) {
+                val toast = Toast.makeText(
+                    this@TripFinishedActivity,
+                    getString(R.string.trip_created),
+                    Toast.LENGTH_SHORT
+                )
+
+                toast.show()
+
                 startActivity(
                     Intent(
                         this@TripFinishedActivity,
                         NewTripActivity::class.java
                     )
                 )
+
                 finish()
             } else {
                 tvError.text = getString(R.string.error1)

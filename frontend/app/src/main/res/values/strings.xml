@@ -17,4 +17,5 @@
     <string name="destination_reached">Ziel erreicht</string>
     <string name="end">Ende</string>
     <string name="insert">Eintragen</string>
+    <string name="trip_created">Fahrt wurde eingetragen</string>
 </resources>
