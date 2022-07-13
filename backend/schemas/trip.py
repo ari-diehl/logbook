@@ -7,7 +7,7 @@ class TripBase(BaseModel):
     start: datetime
     end: datetime
     driver_id: int
-    vehicle_id: str
+    vehicle_id: int
     departure_street: str
     departure_house_number: str
     departure_postal_code: str
@@ -29,7 +29,7 @@ class TripUpdate(TripBase):
     start: Optional[datetime] = None
     end: Optional[datetime] = None
     driver_id: Optional[int] = None
-    vehicle_id: Optional[str] = None
+    vehicle_id: Optional[int] = None
     departure_street: Optional[str] = None
     departure_house_number: Optional[str] = None
     departure_postal_code: Optional[str] = None

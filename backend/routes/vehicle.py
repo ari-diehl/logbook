@@ -9,7 +9,15 @@ router = APIRouter(prefix="/vehicles")
 
 
 @router.get("/", response_model=list[VehicleResponse])
-def read_vehicles(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_vehicles(license_plate: str = None, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    if license_plate:
+        vehicle = vehicle_service.read_by_license_plate(db, license_plate)
+
+        if not vehicle:
+            raise HTTPException(status_code=404)
+
+        return [vehicle]
+
     return vehicle_service.read_multi(db, skip, limit)
 
 
@@ -25,9 +33,6 @@ def read_vehicle(vehicle_id: int, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=VehicleResponse)
 def create_vehicle(vehicle_create: VehicleCreate, db: Session = Depends(get_db)):
-    if vehicle_service.read(db, vehicle_create.id):
-        raise HTTPException(
-            status_code=400)
 
     return vehicle_service.create(db, vehicle_create)
 

@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/location_from"
+            android:text="@string/departure_address"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -55,14 +55,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/location_to"
+            android:text="@string/arrival_address"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTFLocationFrom" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTFDepartureAddress" />
 
         <TextView
             android:id="@+id/textView7"
@@ -104,7 +104,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTFLocationTo" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTFArrivalAddress" />
 
         <Button
             android:id="@+id/button"
@@ -130,9 +130,9 @@
             android:onClick="insertTrip"
             android:text="@string/insert"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTFDistanceCovered" />
+            app:layout_constraintTop_toBottomOf="@+id/etVehicleComment" />
 
         <TextView
             android:id="@+id/tvTFStart"
@@ -159,7 +159,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <TextView
-            android:id="@+id/tvTFLocationFrom"
+            android:id="@+id/tvTFDepartureAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -171,7 +171,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
-            android:id="@+id/tvTFLocationTo"
+            android:id="@+id/tvTFArrivalAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -199,11 +199,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:textColor="@color/red_700"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button" />
+
+        <EditText
+            android:id="@+id/etVehicleComment"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/vehicle_comment_optional"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTFDistanceCovered" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

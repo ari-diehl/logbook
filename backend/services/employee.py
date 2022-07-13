@@ -14,7 +14,10 @@ crypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 class EmployeeService(BaseService[Employee, EmployeeCreate, EmployeeUpdate]):
 
     def login(self, obj_db: Employee) -> EmployeeLoginResponse:
-        return EmployeeLoginResponse(id=obj_db.id, first_name=obj_db.first_name, last_name=obj_db.last_name, role=obj_db.role, access_token=jwt.encode({"sub": str(obj_db.id), "exp": datetime.utcnow() + timedelta(hours=8)}, "4880f7a45cc62e08c5583078c59e8373acd4dd3f19db8eda606a61e5d101aa9c", "HS256"))
+        return EmployeeLoginResponse(id=obj_db.id, personnel_number=obj_db.personnel_number, first_name=obj_db.first_name, last_name=obj_db.last_name, role=obj_db.role, access_token=jwt.encode({"sub": str(obj_db.id), "exp": datetime.utcnow() + timedelta(hours=8)}, "4880f7a45cc62e08c5583078c59e8373acd4dd3f19db8eda606a61e5d101aa9c", "HS256"))
+
+    def read_by_personnel_number(self, db: Session, personnel_number: str):
+        return db.query(self.model).filter(self.model.personnel_number == personnel_number).first()
 
     def change_password(self, db: Session, obj_db: Employee, password: str):
         obj_db.password = crypt_context.hash(password)

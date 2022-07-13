@@ -29,8 +29,8 @@ class TripAdapter(private val trips: List<TripResponse>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.locationFrom.text = trips[position].locationFrom
-        viewHolder.locationTo.text = trips[position].locationTo
+        viewHolder.locationFrom.text = trips[position].departureLocality
+        viewHolder.locationTo.text = trips[position].arrivalLocality
     }
 
     override fun getItemCount() = trips.size

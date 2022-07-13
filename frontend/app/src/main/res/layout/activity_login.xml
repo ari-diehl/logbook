@@ -33,12 +33,12 @@
         app:srcCompat="@drawable/car1" />
 
     <EditText
-        android:id="@+id/etEmployeeId"
+        android:id="@+id/etPersonnelNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Personalnummer"
+        android:hint="@string/personnel_number"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -51,12 +51,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Passwort"
+        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmployeeId" />
+        app:layout_constraintTop_toBottomOf="@+id/etPersonnelNumber" />
 
     <TextView
         android:id="@+id/tvLoginError"

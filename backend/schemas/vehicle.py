@@ -7,7 +7,6 @@ class VehicleBase(BaseModel):
     manufacturer: str
     model: str
     mileage: float
-    comment: Optional[str] = None
 
 
 class VehicleCreate(VehicleBase):

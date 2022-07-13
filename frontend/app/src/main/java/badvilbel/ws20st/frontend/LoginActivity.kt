@@ -16,7 +16,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var etEmployeeId: EditText
+    private lateinit var etPersonnelNumber: EditText
     private lateinit var etPassword: EditText
     private lateinit var tvError: TextView
 
@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        etEmployeeId = findViewById(R.id.etEmployeeId)
+        etPersonnelNumber = findViewById(R.id.etPersonnelNumber)
         etPassword = findViewById(R.id.etPassword)
         tvError = findViewById(R.id.tvLoginError)
     }
@@ -32,12 +32,13 @@ class LoginActivity : AppCompatActivity() {
     fun login(view: View) {
         tvError.text = ""
 
-        val id = etEmployeeId.text.toString()
+        val personnel_number = etPersonnelNumber.text.toString()
         val password = etPassword.text.toString()
 
-        if (id != "" && password != "") {
+        if (personnel_number != "" && password != "") {
             GlobalScope.launch(Dispatchers.Main) {
-                val response = RetrofitInstance.api.login(EmployeeLogin(id.toInt(), password))
+                val response =
+                    RetrofitInstance.api.login(EmployeeLogin(personnel_number.toInt(), password))
 
                 if (response.isSuccessful && response.body() != null) {
                     val sharedPref = getSharedPreferences("employee", Context.MODE_PRIVATE)
@@ -46,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
                     with(sharedPref.edit()) {
                         putInt("id", body!!.id)
+                        putInt("personnel_number", body!!.personnelNumber)
                         putString("first_name", body!!.firstName)
                         putString("last_name", body!!.lastName)
                         putString("role", body!!.role)
@@ -63,7 +65,12 @@ class LoginActivity : AppCompatActivity() {
                             )
                         }
                         "invoice" -> {
-                            startActivity(Intent(this@LoginActivity, InvoiceDashboardActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@LoginActivity,
+                                    InvoiceDashboardActivity::class.java
+                                )
+                            )
                         }
                     }
                 } else {

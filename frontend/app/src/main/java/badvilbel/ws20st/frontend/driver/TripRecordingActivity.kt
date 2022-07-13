@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import badvilbel.ws20st.frontend.R
+import badvilbel.ws20st.frontend.Utils
 import com.google.android.gms.location.*
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -32,8 +33,6 @@ class TripRecordingActivity : AppCompatActivity() {
 
     private lateinit var tvDistanceCovered: TextView
     private lateinit var tvDuration: TextView
-
-    private val decimalFormat = DecimalFormat("0.0")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +76,7 @@ class TripRecordingActivity : AppCompatActivity() {
 
                 distanceCovered += currentLocation!!.distanceTo(previousLocation)
 
-                tvDistanceCovered.text = decimalFormat.format(distanceCovered / 1000)
+                tvDistanceCovered.text = Utils.formatKilometers(distanceCovered / 1000)
 
                 previousLocation = currentLocation
             }
@@ -89,7 +88,7 @@ class TripRecordingActivity : AppCompatActivity() {
                 startLocation = location
                 previousLocation = location
 
-                findViewById<TextView>(R.id.tvLocationStart).text =
+                findViewById<TextView>(R.id.tvDepartureAddress).text =
                     Geocoder(this, Locale.getDefault()).getFromLocation(
                         startLocation!!.latitude,
                         startLocation!!.longitude,
@@ -129,38 +128,45 @@ class TripRecordingActivity : AppCompatActivity() {
     }
 
     fun destinationReached(view: View) {
-        val vehicleId = intent.getStringExtra("vehicleId")
+        val vehicleId = intent.getIntExtra("vehicleId", 0)
         val mileage = intent.getStringExtra("mileage")
 
         val intent = Intent(this, TripFinishedActivity::class.java)
 
-        val addressStart = Geocoder(this, Locale.getDefault()).getFromLocation(
+        val departureAddress = Geocoder(this, Locale.getDefault()).getFromLocation(
             startLocation!!.latitude,
             startLocation!!.longitude,
             1
-        )[0].getAddressLine(0)
+        )[0]
 
-        val addressEnd = Geocoder(this, Locale.getDefault()).getFromLocation(
+        val arrivalAddress = Geocoder(this, Locale.getDefault()).getFromLocation(
             currentLocation!!.latitude,
             currentLocation!!.longitude,
             1
-        )[0].getAddressLine(0)
-
-        val format = SimpleDateFormat("dd.MM.yyyy HH:mm")
-        val jsonFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'")
+        )[0]
 
         val now = Date()
 
         with(intent) {
             putExtra("vehicleId", vehicleId)
             putExtra("mileage", mileage)
-            putExtra("distance", decimalFormat.format(distanceCovered / 1000).toDouble())
-            putExtra("start", format.format(start))
-            putExtra("end", format.format(now))
-            putExtra("startJson", jsonFormat.format(start))
-            putExtra("endJson", jsonFormat.format(now))
-            putExtra("locationFrom", addressStart)
-            putExtra("locationTo", addressEnd)
+            putExtra("distance", Utils.formatKilometers(distanceCovered / 1000).toDouble())
+            putExtra("start", Utils.formatDate(start))
+            putExtra("end", Utils.formatDate(now))
+            putExtra("startJson", Utils.dateToJson(start))
+            putExtra("endJson", Utils.dateToJson(now))
+            putExtra("departureAddress", departureAddress.getAddressLine(0))
+            putExtra("departureStreet", departureAddress.thoroughfare)
+            putExtra("departureHouseNumber", departureAddress.subThoroughfare)
+            putExtra("departurePostalCode", departureAddress.postalCode)
+            putExtra("departureLocality", departureAddress.locality)
+            putExtra("departureCountry", departureAddress.countryName)
+            putExtra("arrivalAddress", arrivalAddress.getAddressLine(0))
+            putExtra("arrivalStreet", arrivalAddress.thoroughfare)
+            putExtra("arrivalHouseNumber", arrivalAddress.subThoroughfare)
+            putExtra("arrivalPostalCode", arrivalAddress.postalCode)
+            putExtra("arrivalLocality", arrivalAddress.locality)
+            putExtra("arrivalCountry", arrivalAddress.countryName)
         }
 
         startActivity(intent)

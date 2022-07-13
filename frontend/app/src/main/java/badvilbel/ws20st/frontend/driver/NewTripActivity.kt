@@ -13,7 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class NewTripActivity : AppCompatActivity() {
-    lateinit var etVehicleId: EditText
+    lateinit var etLicensePlate: EditText
     lateinit var etMileage: EditText
     lateinit var tvError: TextView
 
@@ -21,23 +21,27 @@ class NewTripActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_trip)
 
-        etVehicleId = findViewById(R.id.etVehicleId)
+        etLicensePlate = findViewById(R.id.etLicensePlate)
         etMileage = findViewById(R.id.etMileage)
         tvError = findViewById(R.id.tvNewTripError)
     }
 
     fun startTrip(view: View) {
-        val vehicleId = etVehicleId.text.toString()
+        val licensePlate = etLicensePlate.text.toString()
         val mileage = etMileage.text.toString()
 
-        if (vehicleId != "" && mileage != "") {
+        if (licensePlate != "" && mileage != "") {
             GlobalScope.launch(Dispatchers.Main) {
-                val response = RetrofitInstance.api.getVehicle(vehicleId)
+                val response = RetrofitInstance.api.readVehicles(licensePlate)
 
-                if (response.isSuccessful && response.body() != null) {
+                val body = response.body()
+
+                if (response.isSuccessful && body != null && body!!
+                        .isNotEmpty()
+                ) {
                     val intent = Intent(this@NewTripActivity, TripRecordingActivity::class.java)
 
-                    intent.putExtra("vehicleId", vehicleId)
+                    intent.putExtra("vehicleId", body[0].id)
                     intent.putExtra("mileage", mileage)
 
                     startActivity(intent)

@@ -11,9 +11,18 @@ router = APIRouter(prefix="/employees")
 
 
 @router.get("/", response_model=list[EmployeeResponse])
-def read_employees(skip: int = 0, limit: int = 100, current_employee=Depends(get_current_employee), db: Session = Depends(get_db)):
+def read_employees(personnel_number: int = None, skip: int = 0, limit: int = 100, current_employee=Depends(get_current_employee), db: Session = Depends(get_db)):
     if current_employee.role != "invoice":
         raise HTTPException(status_code=401)
+
+    if personnel_number:
+        employee = employee_service.read_by_personnel_number(
+            db, personnel_number)
+
+        if not employee:
+            raise HTTPException(status_code=404)
+
+        return [employee]
 
     return employee_service.read_multi(db, skip, limit)
 

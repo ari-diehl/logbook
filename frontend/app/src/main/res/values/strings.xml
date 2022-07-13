@@ -4,13 +4,13 @@
     <string name="new_trip">Neue Fahrt aufzeichnen</string>
     <string name="trip_finished">Fahrt abgeschlossen</string>
     <string name="trip_recording">Fahrt wird aufgezeichnet</string>
-    <string name="vehicle_id">KFZ-Kennzeichen</string>
+    <string name="license_plate">Kennzeichen</string>
     <string name="mileage">Kilometerstand</string>
     <string name="start">Start</string>
     <string name="error1">Es ist ein Fehler aufgetreten</string>
     <string name="login">Anmelden</string>
-    <string name="location_from">Abfahrtsort</string>
-    <string name="location_to">Ankunftsort</string>
+    <string name="departure_address">Abfahrtsort</string>
+    <string name="arrival_address">Ankunftsort</string>
     <string name="duration">Dauer</string>
     <string name="distance_covered_km">Zurückgelegte Kilometer</string>
     <string name="cancel">Abbrechen</string>
@@ -22,4 +22,7 @@
     <string name="show_trips">Fahrten anzeigen</string>
     <string name="show_users">Benutzer anzeigen</string>
     <string name="create_user">Benutzer erstellen</string>
+    <string name="personnel_number">Personalnummer</string>
+    <string name="password">Passwort</string>
+    <string name="vehicle_comment_optional">Fahrzeugkommentar (optional)</string>
 </resources>

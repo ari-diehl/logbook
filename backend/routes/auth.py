@@ -10,7 +10,8 @@ router = APIRouter(prefix="/auth")
 
 @router.post("/employee_login", response_model=EmployeeLoginResponse)
 def login(employee_login: EmployeeLogin, db: Session = Depends(get_db)):
-    employee = employee_service.read(db, employee_login.id)
+    employee = employee_service.read_by_personnel_number(
+        db, employee_login.personnel_number)
 
     if not employee:
         raise HTTPException(status_code=404)

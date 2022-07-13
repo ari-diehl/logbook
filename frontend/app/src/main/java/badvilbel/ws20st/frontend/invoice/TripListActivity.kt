@@ -16,7 +16,7 @@ class TripListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_trip_list)
 
         GlobalScope.launch(Dispatchers.Main) {
-            val response = RetrofitInstance.api.getTrips()
+            val response = RetrofitInstance.api.readTrips()
 
             if (response.isSuccessful && response.body() != null) {
                 val rvTrips = findViewById<RecyclerView>(R.id.rvTrips)

@@ -27,16 +27,16 @@ class Trip(Base):
     end = Column(DateTime)
     driver_id = Column(ForeignKey("employee.id"))
     vehicle_id = Column(ForeignKey("vehicle.id"))
-    departure_street: Column(String)
-    departure_house_number: Column(String)
-    departure_postal_code: Column(String)
-    departure_locality: Column(String)
-    departure_country: Column(String)
-    arrival_street: Column(String)
-    arrival_house_number: Column(String)
-    arrival_postal_code: Column(String)
-    arrival_locality: Column(String)
-    arrival_country: Column(String)
+    departure_street = Column(String)
+    departure_house_number = Column(String)
+    departure_postal_code = Column(String)
+    departure_locality = Column(String)
+    departure_country = Column(String)
+    arrival_street = Column(String)
+    arrival_house_number = Column(String)
+    arrival_postal_code = Column(String)
+    arrival_locality = Column(String)
+    arrival_country = Column(String)
     distance = Column(Float)
 
     driver = relationship("Employee", back_populates="trips")
@@ -52,7 +52,7 @@ class Vehicle(Base):
     mileage = Column(Float)
 
     trips = relationship("Trip", back_populates="vehicle")
-    comments = relationship("VehicleComments", back_populates="vehicle")
+    comments = relationship("VehicleComment", back_populates="vehicle")
 
 
 class VehicleComment(Base):

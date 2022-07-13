@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/tvLocationStart"
+        android:id="@+id/tvDepartureAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/location_from"
+        android:text="@string/departure_address"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -121,7 +121,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLocationStart" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDepartureAddress" />
 
     <TextView
         android:id="@+id/textView4"
