@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import badvilbel.ws20st.frontend.R
-import badvilbel.ws20st.frontend.RetrofitInstance
+import badvilbel.ws20st.frontend.networking.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 class NewTripActivity : AppCompatActivity() {
     lateinit var etVehicleId: EditText
     lateinit var etMileage: EditText
-    lateinit var tvNewTripError: TextView
+    lateinit var tvError: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +23,7 @@ class NewTripActivity : AppCompatActivity() {
 
         etVehicleId = findViewById(R.id.etVehicleId)
         etMileage = findViewById(R.id.etMileage)
-        tvNewTripError = findViewById(R.id.tvNewTripError)
+        tvError = findViewById(R.id.tvNewTripError)
     }
 
     fun startTrip(view: View) {
@@ -43,7 +42,7 @@ class NewTripActivity : AppCompatActivity() {
 
                     startActivity(intent)
                 } else {
-                    tvNewTripError.text = getString(R.string.error1)
+                    tvError.text = getString(R.string.error1)
                 }
             }
         }

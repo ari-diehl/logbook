@@ -30,31 +30,28 @@ def read_employee(employee_id: int, current_employee=Depends(get_current_employe
 
     return employee
 
-#current_employee=Depends(get_current_employee),
+# current_employee=Depends(get_current_employee),
+
+
 @router.post("/", response_model=EmployeeResponse)
 def create_employee(employee_create: EmployeeCreate, db: Session = Depends(get_db)):
-    #if current_employee.role != "invoice":
-        #raise HTTPException(status_code=401)
-
-    employee = employee_service.read(db, employee_create.id)
-
-    if employee:
-        raise HTTPException(status_code=400)
+    # if current_employee.role != "invoice":
+    #raise HTTPException(status_code=401)
 
     return employee_service.create(db, employee_create)
 
 
-@router.put("/", response_model=EmployeeResponse)
-def update_employee(employee_update: EmployeeUpdate, password_only: Optional[bool] = False, current_employee=Depends(get_current_employee), db: Session = Depends(get_db)):
-    if password_only and current_employee.id == employee_update.id:
-        employee = employee_service.read(db, employee_update.id)
+@router.put("/{employee_id}", response_model=EmployeeResponse)
+def update_employee(employee_id: int, employee_update: EmployeeUpdate, password_only: Optional[bool] = False, current_employee=Depends(get_current_employee), db: Session = Depends(get_db)):
+    if password_only and current_employee.id == employee_id:
+        employee = employee_service.read(db, employee_id)
 
         return employee_service.change_password(db, employee, employee_update.password)
 
     if current_employee.role != "invoice":
         raise HTTPException(status_code=401)
 
-    employee = employee_service.read(db, employee_update.id)
+    employee = employee_service.read(db, employee_id)
 
     if not employee:
         raise HTTPException(status_code=404)

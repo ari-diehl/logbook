@@ -9,5 +9,5 @@ data class TripCreate(
     @SerializedName("vehicle_id") val vehicleId: String,
     @SerializedName("location_from") val locationFrom: String,
     @SerializedName("location_to") val locationTo: String,
-    val distance: Int
+    val distance: Double
 )

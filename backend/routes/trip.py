@@ -9,12 +9,12 @@ router = APIRouter(prefix="/trips")
 
 
 @router.get("/", response_model=list[TripResponse])
-def read_all(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_trips(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return trip_service.read_multi(db, skip, limit)
 
 
 @router.get("/{trip_id}", response_model=TripResponse)
-def read(trip_id: int, db: Session = Depends(get_db)):
+def read_trip(trip_id: int, db: Session = Depends(get_db)):
     trip = trip_service.read(db, trip_id)
 
     if not trip:
@@ -24,13 +24,13 @@ def read(trip_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/", response_model=TripResponse)
-def create(trip_create: TripCreate, db: Session = Depends(get_db)):
+def create_trip(trip_create: TripCreate, db: Session = Depends(get_db)):
     return trip_service.create(db, trip_create)
 
 
-@router.put("/", response_model=TripResponse)
-def update(trip_update: TripUpdate, db: Session = Depends(get_db)):
-    trip = trip_service.read(db, trip_update.id)
+@router.put("/{trip_id}", response_model=TripResponse)
+def update_trip(trip_id: int, trip_update: TripUpdate, db: Session = Depends(get_db)):
+    trip = trip_service.read(db, trip_id)
 
     if not trip:
         raise HTTPException(status_code=404)
@@ -39,7 +39,7 @@ def update(trip_update: TripUpdate, db: Session = Depends(get_db)):
 
 
 @router.delete("/{trip_id}", response_model=TripResponse)
-def delete(trip_id: int, db: Session = Depends(get_db)):
+def delete_trip(trip_id: int, db: Session = Depends(get_db)):
     trip = trip_service.read(db, trip_id)
 
     if not trip:

@@ -8,7 +8,9 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import badvilbel.ws20st.frontend.driver.NewTripActivity
+import badvilbel.ws20st.frontend.invoice.InvoiceDashboardActivity
 import badvilbel.ws20st.frontend.models.employee.EmployeeLogin
+import badvilbel.ws20st.frontend.networking.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
     private lateinit var etEmployeeId: EditText
     private lateinit var etPassword: EditText
-    private lateinit var tvLoginError: TextView
+    private lateinit var tvError: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +26,11 @@ class LoginActivity : AppCompatActivity() {
 
         etEmployeeId = findViewById(R.id.etEmployeeId)
         etPassword = findViewById(R.id.etPassword)
-        tvLoginError = findViewById(R.id.tvLoginError)
+        tvError = findViewById(R.id.tvLoginError)
     }
 
     fun login(view: View) {
-        tvLoginError.text = ""
+        tvError.text = ""
 
         val id = etEmployeeId.text.toString()
         val password = etPassword.text.toString()
@@ -38,7 +40,6 @@ class LoginActivity : AppCompatActivity() {
                 val response = RetrofitInstance.api.login(EmployeeLogin(id.toInt(), password))
 
                 if (response.isSuccessful && response.body() != null) {
-
                     val sharedPref = getSharedPreferences("employee", Context.MODE_PRIVATE)
 
                     val body = response.body()
@@ -60,11 +61,13 @@ class LoginActivity : AppCompatActivity() {
                                     NewTripActivity::class.java
                                 )
                             )
-                            finish()
+                        }
+                        "invoice" -> {
+                            startActivity(Intent(this@LoginActivity, InvoiceDashboardActivity::class.java))
                         }
                     }
                 } else {
-                    tvLoginError.text = getString(R.string.error1)
+                    tvError.text = getString(R.string.error1)
                 }
             }
         }

@@ -1,4 +1,4 @@
-package badvilbel.ws20st.frontend
+package badvilbel.ws20st.frontend.networking
 
 import badvilbel.ws20st.frontend.models.employee.EmployeeLogin
 import badvilbel.ws20st.frontend.models.employee.EmployeeLoginResponse
@@ -27,6 +27,9 @@ interface LogbookApi {
     @Headers("Content-Type: application/json")
     @PUT("/vehicles/")
     suspend fun updateVehicle(@Body vehicle: VehicleUpdate): Response<VehicleResponse>
+
+    @GET("/trips")
+    suspend fun getTrips(): Response<List<TripResponse>>
 
     @Headers("Content-Type: application/json")
     @POST("/trips/")

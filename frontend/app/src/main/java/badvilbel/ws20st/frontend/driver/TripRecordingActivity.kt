@@ -5,39 +5,35 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import badvilbel.ws20st.frontend.R
 import com.google.android.gms.location.*
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.timerTask
 
 class TripRecordingActivity : AppCompatActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
-
     private var startLocation: Location? = null
     private var previousLocation: Location? = null
     private var currentLocation: Location? = null
 
     private var distanceCovered: Double = 0.0
+    private lateinit var start: Date
 
     private lateinit var tvDistanceCovered: TextView
     private lateinit var tvDuration: TextView
 
-    private lateinit var start: Date
+    private val decimalFormat = DecimalFormat("0.0")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +58,8 @@ class TripRecordingActivity : AppCompatActivity() {
                 101
             )
 
-            return
+            startActivity(Intent(this, NewTripActivity::class.java))
+            finish()
         }
 
         locationRequest = LocationRequest.create().apply {
@@ -79,7 +76,8 @@ class TripRecordingActivity : AppCompatActivity() {
                 currentLocation = locationResult.lastLocation
 
                 distanceCovered += currentLocation!!.distanceTo(previousLocation)
-                tvDistanceCovered.text = (distanceCovered / 1000).toInt().toString()
+
+                tvDistanceCovered.text = decimalFormat.format(distanceCovered / 1000)
 
                 previousLocation = currentLocation
             }
@@ -125,6 +123,7 @@ class TripRecordingActivity : AppCompatActivity() {
     }
 
     fun cancel(view: View) {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
         startActivity(Intent(this, NewTripActivity::class.java))
         finish()
     }
@@ -155,7 +154,7 @@ class TripRecordingActivity : AppCompatActivity() {
         with(intent) {
             putExtra("vehicleId", vehicleId)
             putExtra("mileage", mileage)
-            putExtra("distance", (distanceCovered / 1000).toInt())
+            putExtra("distance", decimalFormat.format(distanceCovered / 1000).toDouble())
             putExtra("start", format.format(start))
             putExtra("end", format.format(now))
             putExtra("startJson", jsonFormat.format(start))

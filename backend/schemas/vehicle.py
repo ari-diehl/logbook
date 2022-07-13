@@ -3,10 +3,11 @@ from typing import Optional
 
 
 class VehicleBase(BaseModel):
-    id: str
+    license_plate: str
     manufacturer: str
     model: str
-    mileage: int
+    mileage: float
+    comment: Optional[str] = None
 
 
 class VehicleCreate(VehicleBase):
@@ -14,12 +15,14 @@ class VehicleCreate(VehicleBase):
 
 
 class VehicleUpdate(VehicleBase):
+    license_plate: Optional[str] = None
     manufacturer: Optional[str] = None
     model: Optional[str] = None
-    mileage: Optional[int] = None
+    mileage: Optional[float] = None
 
 
 class VehicleResponse(VehicleBase):
+    id: int
 
     class Config:
         orm_mode = True

@@ -18,4 +18,8 @@
     <string name="end">Ende</string>
     <string name="insert">Eintragen</string>
     <string name="trip_created">Fahrt wurde eingetragen</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="show_trips">Fahrten anzeigen</string>
+    <string name="show_users">Benutzer anzeigen</string>
+    <string name="create_user">Benutzer erstellen</string>
 </resources>

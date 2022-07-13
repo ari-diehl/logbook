@@ -1,5 +1,6 @@
-package badvilbel.ws20st.frontend
+package badvilbel.ws20st.frontend.networking
 
+import badvilbel.ws20st.frontend.networking.LogbookApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

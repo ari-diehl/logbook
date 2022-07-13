@@ -2,23 +2,18 @@ package badvilbel.ws20st.frontend.driver
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import badvilbel.ws20st.frontend.R
-import badvilbel.ws20st.frontend.RetrofitInstance
-import badvilbel.ws20st.frontend.models.employee.EmployeeLogin
+import badvilbel.ws20st.frontend.networking.RetrofitInstance
 import badvilbel.ws20st.frontend.models.trip.TripCreate
 import badvilbel.ws20st.frontend.models.vehicle.VehicleUpdate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
-import java.time.format.DateTimeFormatter
 
 class TripFinishedActivity : AppCompatActivity() {
     private lateinit var tvStart: TextView
@@ -51,7 +46,7 @@ class TripFinishedActivity : AppCompatActivity() {
                 getStringExtra("vehicleId")!!,
                 getStringExtra("locationFrom")!!,
                 getStringExtra("locationTo")!!,
-                getIntExtra("distance", 0)!!
+                getDoubleExtra("distance", 0.0)!!
             )
         }
 
@@ -67,11 +62,10 @@ class TripFinishedActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.Main) {
             val response = RetrofitInstance.api.createTrip(trip)
-
             val responseVehicle = RetrofitInstance.api.updateVehicle(
                 VehicleUpdate(
                     id = trip.vehicleId,
-                    mileage = intent.getStringExtra("mileage")!!.toInt() + trip.distance
+                    mileage = intent.getStringExtra("mileage")!!.toDouble() + trip.distance
                 )
             )
 
@@ -81,7 +75,6 @@ class TripFinishedActivity : AppCompatActivity() {
                     getString(R.string.trip_created),
                     Toast.LENGTH_SHORT
                 )
-
                 toast.show()
 
                 startActivity(
@@ -90,7 +83,6 @@ class TripFinishedActivity : AppCompatActivity() {
                         NewTripActivity::class.java
                     )
                 )
-
                 finish()
             } else {
                 tvError.text = getString(R.string.error1)

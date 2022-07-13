@@ -4,7 +4,7 @@ from schemas.employee import EmployeeResponse
 
 
 class EmployeeLogin(BaseModel):
-    id: int
+    personnel_number: int
     password: str
 
 

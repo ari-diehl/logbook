@@ -3,7 +3,7 @@ from typing import Optional
 
 
 class EmployeeBase(BaseModel):
-    id: int
+    personnel_number: int
     first_name: str
     last_name: str
     role: str
@@ -14,6 +14,7 @@ class EmployeeCreate(EmployeeBase):
 
 
 class EmployeeUpdate(EmployeeBase):
+    personnel_number: Optional[int] = None
     password: Optional[str] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
@@ -21,6 +22,7 @@ class EmployeeUpdate(EmployeeBase):
 
 
 class EmployeeResponse(EmployeeBase):
+    id: int
 
     class Config:
         orm_mode = True
