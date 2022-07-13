@@ -4,7 +4,7 @@ import badvilbel.ws20st.frontend.networking.LogbookApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val SERVER_URL = "http://192.168.2.103:5000"
+const val SERVER_URL = "http://192.168.4.1:5000"
 
 object RetrofitInstance {
     val api: LogbookApi by lazy {
