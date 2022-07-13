@@ -8,7 +8,13 @@ router = APIRouter(prefix="/vehicle_comments")
 
 
 @router.get("/", response_model=list[VehicleCommentResponse])
-def read_vehicle_comments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_vehicle_comments(vehicle_id: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    if vehicle_id:
+        comments = vehicle_comment_service.read_by_vehicle_id(
+            db, vehicle_id)
+
+        return comments
+
     return vehicle_comment_service.read_multi(db, skip, limit)
 
 

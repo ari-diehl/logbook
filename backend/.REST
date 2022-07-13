@@ -62,3 +62,15 @@ Content-Type: application/json
   "role": "driver",
   "password": "123"
 }
+
+###
+POST http://localhost:5000/employees HTTP/1.1
+Content-Type: application/json
+
+{
+  "personnel_number": 1,
+  "first_name": "Max",
+  "last_name": "Mustermann",
+  "role": "invoice",
+  "password": "123"
+}

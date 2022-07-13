@@ -1,6 +1,7 @@
 package badvilbel.ws20st.frontend.models.trip
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class TripResponse(
     val id: Int,
@@ -19,4 +20,4 @@ data class TripResponse(
     @SerializedName("arrival_locality") val arrivalLocality: String,
     @SerializedName("arrival_country") val arrivalCountry: String,
     val distance: Double
-)
+) : Serializable

@@ -25,4 +25,10 @@
     <string name="personnel_number">Personalnummer</string>
     <string name="password">Passwort</string>
     <string name="vehicle_comment_optional">Fahrzeugkommentar (optional)</string>
+    <string name="trip_details">Fahrtdetails</string>
+    <string name="street">Straße</string>
+    <string name="house_number">Hausnummer</string>
+    <string name="postal_code">Postleitzahl</string>
+    <string name="locality">Ort</string>
+    <string name="country">Land</string>
 </resources>
