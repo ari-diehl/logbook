@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import badvilbel.ws20st.frontend.R
@@ -41,8 +42,6 @@ class TripRecordingActivity : AppCompatActivity() {
         tvDistanceCovered = findViewById(R.id.tvDistanceCovered)
         tvDuration = findViewById(R.id.tvDuration)
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -50,16 +49,23 @@ class TripRecordingActivity : AppCompatActivity() {
                 this,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                101
-            )
+        ) ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
+            1
+        )
+        else
+            startRecording()
 
-            startActivity(Intent(this, NewTripActivity::class.java))
-            finish()
-        }
+
+    }
+
+    fun startRecording()
+    {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         locationRequest = LocationRequest.create().apply {
             interval = TimeUnit.SECONDS.toMillis(1)
@@ -83,6 +89,16 @@ class TripRecordingActivity : AppCompatActivity() {
 
         }
 
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
         fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
             .addOnSuccessListener { location: Location? ->
                 startLocation = location
@@ -172,4 +188,23 @@ class TripRecordingActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+    //override on permission result
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startRecording()
+            }
+            else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
 }
