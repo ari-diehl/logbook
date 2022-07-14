@@ -30,24 +30,29 @@ class NewTripActivity : AppCompatActivity() {
         val licensePlate = etLicensePlate.text.toString()
         val mileage = etMileage.text.toString()
 
-        if (licensePlate != "" && mileage != "") {
-            GlobalScope.launch(Dispatchers.Main) {
-                val response = RetrofitInstance.api.readVehicles(licensePlate)
+        if (licensePlate.isEmpty() || mileage.isEmpty()) {
+            tvError.text = getString(R.string.error_missing_input)
+            return
+        }
 
-                val body = response.body()
 
-                if (response.isSuccessful && body != null && body!!
-                        .isNotEmpty()
-                ) {
-                    val intent = Intent(this@NewTripActivity, TripRecordingActivity::class.java)
 
-                    intent.putExtra("vehicleId", body[0].id)
-                    intent.putExtra("mileage", mileage)
+        GlobalScope.launch(Dispatchers.Main) {
+            val response = RetrofitInstance.api.readVehicles(licensePlate)
 
-                    startActivity(intent)
-                } else {
-                    tvError.text = getString(R.string.error1)
-                }
+            val body = response.body()
+
+            if (response.isSuccessful && body != null && body!!
+                    .isNotEmpty()
+            ) {
+                val intent = Intent(this@NewTripActivity, TripRecordingActivity::class.java)
+
+                intent.putExtra("vehicleId", body[0].id)
+                intent.putExtra("mileage", mileage)
+
+                startActivity(intent)
+            } else {
+                tvError.text = getString(R.string.error_vehicle_not_found)
             }
         }
     }

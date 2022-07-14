@@ -34,48 +34,50 @@ class LoginActivity : AppCompatActivity() {
 
         val personnel_number = etPersonnelNumber.text.toString()
         val password = etPassword.text.toString()
+        if (personnel_number == "" || password == "") {
+            tvError.text = getString(R.string.error_missing_input)
+            return;
+        }
 
-        if (personnel_number != "" && password != "") {
-            GlobalScope.launch(Dispatchers.Main) {
-                val response =
-                    RetrofitInstance.api.login(EmployeeLogin(personnel_number.toInt(), password))
+        GlobalScope.launch(Dispatchers.Main) {
+            val response =
+                RetrofitInstance.api.login(EmployeeLogin(personnel_number.toInt(), password))
 
-                if (response.isSuccessful && response.body() != null) {
-                    val sharedPref = getSharedPreferences("employee", Context.MODE_PRIVATE)
+            if (response.isSuccessful && response.body() != null) {
+                val sharedPref = getSharedPreferences("employee", Context.MODE_PRIVATE)
 
-                    val body = response.body()
+                val body = response.body()
 
-                    with(sharedPref.edit()) {
-                        putInt("id", body!!.id)
-                        putInt("personnel_number", body!!.personnelNumber)
-                        putString("first_name", body!!.firstName)
-                        putString("last_name", body!!.lastName)
-                        putString("role", body!!.role)
-                        putString("access_token", body!!.accessToken)
-                        commit()
-                    }
-
-                    when (body!!.role) {
-                        "driver" -> {
-                            startActivity(
-                                Intent(
-                                    this@LoginActivity,
-                                    NewTripActivity::class.java
-                                )
-                            )
-                        }
-                        "invoice" -> {
-                            startActivity(
-                                Intent(
-                                    this@LoginActivity,
-                                    InvoiceDashboardActivity::class.java
-                                )
-                            )
-                        }
-                    }
-                } else {
-                    tvError.text = getString(R.string.error1)
+                with(sharedPref.edit()) {
+                    putInt("id", body!!.id)
+                    putInt("personnel_number", body!!.personnelNumber)
+                    putString("first_name", body!!.firstName)
+                    putString("last_name", body!!.lastName)
+                    putString("role", body!!.role)
+                    putString("access_token", body!!.accessToken)
+                    commit()
                 }
+
+                when (body!!.role) {
+                    "driver" -> {
+                        startActivity(
+                            Intent(
+                                this@LoginActivity,
+                                NewTripActivity::class.java
+                            )
+                        )
+                    }
+                    "invoice" -> {
+                        startActivity(
+                            Intent(
+                                this@LoginActivity,
+                                InvoiceDashboardActivity::class.java
+                            )
+                        )
+                    }
+                }
+            } else {
+                tvError.text = getString(R.string.error_generic)
             }
         }
     }

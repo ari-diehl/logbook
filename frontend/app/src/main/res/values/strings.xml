@@ -7,7 +7,11 @@
     <string name="license_plate">Kennzeichen</string>
     <string name="mileage">Kilometerstand</string>
     <string name="start">Start</string>
-    <string name="error1">Es ist ein Fehler aufgetreten</string>
+    <string name="error_generic">Es ist ein Fehler aufgetreten</string>
+    <string name="error_invalid_credentials">Falsche Zugangsdaten</string>
+    <string name="error_missing_input">Bitte alle Felder ausfüllen</string>
+    <string name="error_permissions">Erlaubnis verweigert</string>
+    <string name="error_vehicle_not_found">Fahrzeug nicht gefunden</string>
     <string name="login">Anmelden</string>
     <string name="departure_address">Abfahrtsort</string>
     <string name="arrival_address">Ankunftsort</string>

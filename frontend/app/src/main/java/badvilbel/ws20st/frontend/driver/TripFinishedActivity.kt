@@ -97,7 +97,7 @@ class TripFinishedActivity : AppCompatActivity() {
                 )
 
                 if (!responseVehicleComment.isSuccessful || response.body() == null) {
-                    tvError.text = getString(R.string.error1)
+                    tvError.text = getString(R.string.error_generic)
 
                     return@launch
                 }
@@ -119,7 +119,7 @@ class TripFinishedActivity : AppCompatActivity() {
                 )
                 finish()
             } else {
-                tvError.text = getString(R.string.error1)
+                tvError.text = getString(R.string.error_generic)
             }
         }
     }

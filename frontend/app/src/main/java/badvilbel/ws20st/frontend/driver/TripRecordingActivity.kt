@@ -63,8 +63,7 @@ class TripRecordingActivity : AppCompatActivity() {
 
     }
 
-    fun startRecording()
-    {
+    fun startRecording() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         locationRequest = LocationRequest.create().apply {
@@ -139,7 +138,7 @@ class TripRecordingActivity : AppCompatActivity() {
 
     fun cancel(view: View) {
         fusedLocationClient.removeLocationUpdates(locationCallback)
-        startActivity(Intent(this, NewTripActivity::class.java))
+        //startActivity(Intent(this, NewTripActivity::class.java))
         finish()
     }
 
@@ -199,9 +198,9 @@ class TripRecordingActivity : AppCompatActivity() {
         if (requestCode == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startRecording()
-            }
-            else {
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, getString(R.string.error_permissions), Toast.LENGTH_SHORT)
+                    .show()
                 finish()
             }
         }
