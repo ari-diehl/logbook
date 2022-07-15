@@ -1,0 +1,79 @@
+POST http://localhost:5000/auth/employee_login HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 123,
+    "password": "123"
+}
+###
+GET http://localhost:5000/trips HTTP/1.1
+###
+GET http://localhost:5000/vehicles/LDKAD226 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJleHAiOjE2NTc2NjU0ODJ9.LAv8B7ksUKwtEcsY3fDMVSZmPU-4ovlm0LycGiM31s4
+###
+POST http://localhost:5000/vehicles HTTP/1.1
+Content-Type: application/json
+
+{
+    "license_plate": "LDKAD226",
+    "manufacturer": "VW",
+    "model": "Fox",
+    "mileage": 65100
+}
+###
+PUT http://localhost:5000/vehicles HTTP/1.1
+Content-Type: application/json
+
+{
+    "license_plate": "LDKAD226",
+    "manufacturer": "VW",
+    "model": "Fox",
+    "mileage": 65100
+}
+###
+POST http://localhost:5000/trips HTTP/1.1
+Content-Type: application/json
+
+{
+  "start": "2022-07-13T13:18:15.320Z",
+  "end": "2022-07-13T13:18:15.320Z",
+  "driver_id": 1,
+  "vehicle_id": 1,
+  "departure_street": "string",
+  "departure_house_number": "string",
+  "departure_postal_code": "string",
+  "departure_locality": "string",
+  "departure_country": "string",
+  "arrival_street": "string",
+  "arrival_house_number": "string",
+  "arrival_postal_code": "string",
+  "arrival_locality": "string",
+  "arrival_country": "string",
+  "distance": 0
+}
+###
+POST http://localhost:5000/employees HTTP/1.1
+Content-Type: application/json
+
+{
+  "personnel_number": 2,
+  "first_name": "Daniel",
+  "last_name": "Spahn",
+  "role": "driver",
+  "password": "123"
+}
+
+###
+POST http://localhost:5000/employees HTTP/1.1
+Content-Type: application/json
+
+{
+  "personnel_number": 1,
+  "first_name": "Max",
+  "last_name": "Mustermann",
+  "role": "invoice",
+  "password": "123"
+}
+
+###
+GET http://localhost:5000/employees HTTP/1.1
